@@ -101,8 +101,8 @@ export namespace P_3_1Server {
                     console.log(result);
                     if (result) {
                             console.log("Status geändert");
-                            if (JSON.parse(body).student) {
-                                dbconnection.updateOne({"_id": new ObjectId(JSON.parse(body).artikel_id)}, { $set: {status: JSON.parse(body).status, student: JSON.parse(body).student}});
+                            if (JSON.parse(body).status == "frei") {
+                                dbconnection.updateOne({"_id": new ObjectId(JSON.parse(body).artikel_id)}, { $set: {status: JSON.parse(body).status, student: ""}});
                             } else {
                                 dbconnection.updateOne({"_id": new ObjectId(JSON.parse(body).artikel_id)}, { $set: {status: JSON.parse(body).status}});
                             }
