@@ -129,8 +129,8 @@ function createTabelle(_artikel: Array<ListenElement>): void {
 //Allgemeine Methode zur Ausführung von Anfragen
 async function doRequest(_pathName: string, _method: string, _body: string): Promise<Response> {
     //Server URLs
-    //let serverUrl: string = "https://gisabgabewise2021.herokuapp.com/"; //Remote
-    let serverUrl: string = "http://localhost:8100/"; //Local
+    let serverUrl: string = "https://gisabgabewise2021.herokuapp.com/"; //Remote
+    //let serverUrl: string = "http://localhost:8100/"; //Local
     
     let response: Promise<Response>;
 

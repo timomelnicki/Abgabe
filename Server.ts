@@ -31,7 +31,7 @@ export namespace P_3_1Server {
         server.listen(port);
         //let url: string = "mongodb+srv://timo:timo1998@gisabgabe.wskcw.mongodb.net/Nutzer?retryWrites=true&w=majority";
         //let url: string = "mongodb+srv://artikelgis.8pkyr.mongodb.net/<Artikel>"; //--username timo
-        let url: string = "mongodb://localhost:27017";
+        let url: string = "mongodb+srv://artikelgis.8pkyr.mongodb.net/Artikel";
         let options: Mongo.MongoClientOptions;
         let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(url, options);
         await mongoClient.connect();
@@ -192,6 +192,6 @@ export namespace P_3_1Server {
     })();
 }
 
-/*
-mongo "mongodb+srv://artikelgis.8pkyr.mongodb.net/<dbname>" --username timo
-*/ 
+mongo "mongodb+srv://artikelgis.8pkyr.mongodb.net/Artikel" --username timo
+
+//mongo "mongodb+srv://artikelgis.8pkyr.mongodb.net/<dbname>" --username timo
