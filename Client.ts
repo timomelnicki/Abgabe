@@ -206,11 +206,14 @@ async function merken(_artikelId: string, _check: boolean): Promise<void> {
         
     }
     else {
-
+        let idx: number = -1;
         for (let i: number = 0; i < ids.length; i++) {
             if (ids[i] == _artikelId) {
-                delete ids[i];
+                idx = i;
             }
+        } 
+        if (idx > -1) {
+            ids.splice(idx, 1);
         }
         localStorage.setItem("id", JSON.stringify(ids));
     }

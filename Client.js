@@ -174,10 +174,14 @@ async function merken(_artikelId, _check) {
         }
     }
     else {
+        let idx = -1;
         for (let i = 0; i < ids.length; i++) {
             if (ids[i] == _artikelId) {
-                delete ids[i];
+                idx = i;
             }
+        }
+        if (idx > -1) {
+            ids.splice(idx, 1);
         }
         localStorage.setItem("id", JSON.stringify(ids));
     }
