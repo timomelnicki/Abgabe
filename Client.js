@@ -107,8 +107,8 @@ function createTabelle(_artikel) {
 //Allgemeine Methode zur Ausführung von Anfragen
 async function doRequest(_pathName, _method, _body) {
     //Server URLs
-    //let serverUrl: string = "https://gisabgabewise2021.herokuapp.com/"; //Remote
-    let serverUrl = "http://localhost:8100/"; //Local
+    let serverUrl = "https://gisabgabewise2021.herokuapp.com/"; //Remote
+    //let serverUrl: string = "http://localhost:8100/"; //Local
     let response;
     // GET Anfragen müssen ohne body und POST anfragen mit body gesendet werden
     if (_method === "GET") {
