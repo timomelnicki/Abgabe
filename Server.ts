@@ -192,6 +192,3 @@ export namespace P_3_1Server {
     })();
 }
 
-mongo "mongodb+srv://artikelgis.8pkyr.mongodb.net/Artikel" --username timo
-
-//mongo "mongodb+srv://artikelgis.8pkyr.mongodb.net/<dbname>" --username timo

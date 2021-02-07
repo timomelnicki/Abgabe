@@ -173,9 +173,4 @@ var P_3_1Server;
         }
     })();
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
-mongo;
-"mongodb+srv://artikelgis.8pkyr.mongodb.net/Artikel"--;
-username;
-timo;
-//mongo "mongodb+srv://artikelgis.8pkyr.mongodb.net/<dbname>" --username timo
 //# sourceMappingURL=Server.js.map
