@@ -222,7 +222,7 @@ async function merken(_artikelId: string, _check: boolean): Promise<void> {
 //Speichert die Artikel im localStorage ab
 async function reservieren(): Promise<void> {
     let ids: Array<string> = JSON.parse(localStorage.getItem("id"));
-    let form: HTMLFormElement = <HTMLFormElement> document.getElementById("name");
+    let form: HTMLFormElement = <HTMLFormElement> document.getElementById("studentname");
     let data: FormData = new FormData(form);
     let studentenName: string = data.get("student") as string;
     if (ids == null || !studentenName) {

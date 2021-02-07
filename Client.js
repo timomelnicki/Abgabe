@@ -189,7 +189,7 @@ async function merken(_artikelId, _check) {
 //Speichert die Artikel im localStorage ab
 async function reservieren() {
     let ids = JSON.parse(localStorage.getItem("id"));
-    let form = document.getElementById("name");
+    let form = document.getElementById("studentname");
     let data = new FormData(form);
     let studentenName = data.get("student");
     if (ids == null || !studentenName) {
