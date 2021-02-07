@@ -101,7 +101,11 @@ export namespace P_3_1Server {
                     console.log(result);
                     if (result) {
                             console.log("Status geändert");
-                            dbconnection.updateOne({"_id": new ObjectId(JSON.parse(body).artikel_id)}, { $set: {status: JSON.parse(body).status}});
+                            if (JSON.parse(body).student) {
+                                dbconnection.updateOne({"_id": new ObjectId(JSON.parse(body).artikel_id)}, { $set: {status: JSON.parse(body).status, student: JSON.parse(body).student}});
+                            } else {
+                                dbconnection.updateOne({"_id": new ObjectId(JSON.parse(body).artikel_id)}, { $set: {status: JSON.parse(body).status}});
+                            }
                             _response.writeHead(200, "Status erfolgreich geändert");
                         }
                 }

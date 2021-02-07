@@ -147,10 +147,20 @@ function summe(_artikel) {
 //Status von Mitarbeitern veränderbar
 async function aendern(_artikelId, _status) {
     console.log("Sending form data.");
-    let formData = JSON.stringify({
-        "artikel_id": _artikelId,
-        "status": _status
-    });
+    let formData;
+    if (_status == "frei") {
+        formData = JSON.stringify({
+            "artikel_id": _artikelId,
+            "status": _status,
+            "student": ""
+        });
+    }
+    else {
+        formData = JSON.stringify({
+            "artikel_id": _artikelId,
+            "status": _status
+        });
+    }
     let response = await doRequest("status", "POST", formData);
     console.log("Data sent.");
     console.log(response);
