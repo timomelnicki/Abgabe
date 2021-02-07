@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Liste</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="Client.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="Style.css">
+</head>
+<body id="Verleih">
+    <nav class="Liste">
+      <a href="Startseite.html">Home</a>
+      <a href="Studierend.html">Student</a>
+    </nav>
+    <table style="width: 100%" id="tabelle">
+        <tr>
+            <th>Artikel</th>
+            <th>Status</th>
+            <th>Beschreibung</th>
+            <th>Bild</th>
+            <th>Preis</th>
+            <th>Student</th>
+        </tr>
+    </table>  
+    <div id="formular">
+      <p>Artikel Registrierung</p> <br>
+      <form id="artikelformular">
+        <p>Artikelname</p>
+        <input type="text" id="name" name="name" value="" required><br>
+        <p>Artikel Beschreibun</p>
+        <input type="text" id="beschreibung" name="beschreibung" value="" required><br>
+        <p>Bilder link</p>
+        <input type="text" id="bild" name="bild" required><br>
+        <p>Preis</p>
+        <input type="number" id="preis" name="preis" value="" required><br>
+      </form>
+    </div>
+    <button onclick=registrieren()>Eintragen</button>
+
+    <!--
+<table style="width:100%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  </tr>
+</table> 
+    -->
+</body>
+</html>

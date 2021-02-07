@@ -1,0 +1,74 @@
+.verliehen{
+    opacity: 0.5;
+}
+.check{
+    color: green;
+}
+body{
+    font-family: "Calibri", Arial, serif;
+    margin:auto;
+    border: 3px solid green;
+    background-image: url(Hintergrund.png);
+}
+body table img{
+    width: 2cm;
+}
+body table{
+    text-align: center;
+    width: 60%;
+    margin-top: 3em;
+}
+main{
+    display: flex;
+    flex-direction: column;
+}
+body th{
+    margin-left: 25%;
+    margin-right: 25%;
+}
+body button{
+    margin-left: 47%;
+    margin-right: 40%;
+}
+body #studentname{
+    margin-left: 47%;
+    margin-right: 40%;
+}
+.Liste{
+    overflow: hidden;
+    background-color: black;
+    color: darkorange;
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 1em;
+    padding: 0.5em;
+}
+.Liste a{
+    color: darkorange;
+    text-decoration: none;
+}
+.Liste a:hover{
+    color: white;
+}
+body #formular{
+    border: 3px solid darkcyan;
+    margin-left: 45%;
+    margin-right: 47%;
+}
+@media only screen and (min-width: 1024px){
+    #Foto img{
+        width: 600px;
+    }
+}
+@media only screen and (max-width: 600px){
+    .Liste{
+        padding: 0;
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 1024px) and (min-width: 601px){
+    .Liste{
+        width: 50%;
+    }
+}
