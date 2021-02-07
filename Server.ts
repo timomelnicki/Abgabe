@@ -29,7 +29,6 @@ export namespace P_3_1Server {
         server.addListener("request", handleRequest);
         server.addListener("listening", handleListen);
         server.listen(port);
-        //let url: string = "mongodb+srv://timo:timo1998@gisabgabe.wskcw.mongodb.net/Nutzer?retryWrites=true&w=majority";
         let url: string = "mongodb+srv://timo:admin@artikelgis.8pkyr.mongodb.net/<dbname>?retryWrites=true&w=majority";
         let options: Mongo.MongoClientOptions;
         let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(url, options);
@@ -40,14 +39,6 @@ export namespace P_3_1Server {
         function handleListen(): void {
             console.log("Listening on port " + port);
         }
-    
-
-
-        /*
-        Client -> Server    : "send list items"
-        Client <- Server    : [list items]
-        Client              : [list items] => table
-     */
         function handleRequest (_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
             console.log("Received client request.");
             if (_request.method === "GET") {
@@ -69,19 +60,13 @@ export namespace P_3_1Server {
             _request.on("end", async () => {
                 console.log("POST body data: '" + body + "'");
                 console.log("Request URL: '"  + _request.url + "'");
-                //wenn die url login ist findet ein Datenbank abgleich statt
-
-                /*
-                POST body data: {"artikel_id":"[\"601dc33d6dbc61c277262948\",\"601dc3986dbc61c277262949\",\"601ddc506dbc61c27726294a\",\"601ddd366dbc61c27726294b\"]","student":"ark"}
-
-                ids[0]: [
-                */
-
+                //Wenn eine Anfrage von der Student seite kommt, wird eine Reservierung vorbereitet
                 if (_request.url == "/Student") {
                     console.log("Performing reservation.");
                     let ids: Array<string> = JSON.parse(body).artikel_id;
                     let artikel: Array<ListenElement> = [];
                     let allesGut: boolean = true;
+                    //Abfrage ob die ausgewählten Artikel existieren
                     for (let i: number = 0; i < ids.length; i++) {
                         console.log("ids[" + i + "]: " + ids[i]);
                         let result: Mongo.Collection = await dbconnection.findOne({"_id": new ObjectId(ids[i])});
@@ -94,14 +79,13 @@ export namespace P_3_1Server {
                             allesGut = false;
                         }
                     }
-                        //bei erfolgreichem bzw falschem Abgleich dementsprechende Ausgabe
-                        
-                    
+                    //Abfrage ob alle Artikel "frei"" sind
                     for (let i: number = 0; i < artikel.length; i++) {
                         if (artikel[i].status != "frei") {
                             allesGut = false;
                         }
                     }
+                    //Aktualiesieren von dem Status der ausgewählten Artikel
                     if (allesGut == true) {
                         for (let i: number = 0; i < artikel.length; i++) {
                             dbconnection.updateOne({"_id": new ObjectId(artikel[i]._id)}, { $set: {status: "reserviert", student: JSON.parse(body).student } });
@@ -110,7 +94,7 @@ export namespace P_3_1Server {
                     } else {
                         _response.writeHead(200, "Fehler bei der Reservierung. Artikel nicht verfügbar");
                     }
-
+                //direkte Status änderung
                 } else if (_request.url == "/status") {
                     console.log("Status wird geändert");
                     let result: Mongo.Collection = await dbconnection.findOne({"_id": new ObjectId(JSON.parse(body).artikel_id)});
@@ -122,11 +106,10 @@ export namespace P_3_1Server {
                         }
                 }
                 else if (_request.url == "/artikel") {
-                    //Abgleich bei der Registrierung, ob die Email schon vorhanden ist
                     console.log("Performing registration.");
                     //Datenbank eintrag erstellen
                     let artikel: ListenElement = <ListenElement> JSON.parse(body);
-                    dbconnection.insertOne(artikel); //insert laut der documentation ist veraltet
+                    dbconnection.insertOne(artikel);
                     _response.writeHead(200, "Artikel erfolgreich Registriert!", {
                         "Content-Type": "text/plain"
                     });
@@ -141,7 +124,7 @@ export namespace P_3_1Server {
         //Get handler
         function handleGet(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
             console.log("Request: " + _request.url);
-            //wenn die anfrage von der Namen url kam, werden alle Registrierten zurückgeschickt
+            //Wenn eine Artikel anfrage kommt packt es alle Datenbank Elemente in einen Array
             if (_request.url == "/Artikel") {
                 dbconnection.find({}, {projection: {}})
                 .toArray((error, result) => {
@@ -151,7 +134,7 @@ export namespace P_3_1Server {
                         _response.writeHead(500);
                         _response.write("Unerwarteter Fehler");
                     } else {
-                        //Namen werden ausgegeben
+                        //Artikel werden ausgegeben
                         console.log(result);
                         _response.writeHead(200, {"Content-Type": "text/html" });
                         _response.write(JSON.stringify(result));
@@ -161,7 +144,7 @@ export namespace P_3_1Server {
             }
             else {
                 //Andere Getanfragen landen hier
-                //Bei erstem verbinden muss der einzelne / zu Index (die Registrierung) umgewandelt werden
+                //Bei erstem verbinden muss der einzelne / zu Startseite umgewandelt werden
                 if  (_request.url == "/") {
                     _request.url = "/Startseite.html";
                 }

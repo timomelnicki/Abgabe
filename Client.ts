@@ -12,13 +12,13 @@ interface ListenElement {
     status: string;
     student: string;
 }
-
+/*
+registrieren überprüft ob die eingabe kein leeren string enthält, wenn das der fall ist werden die Daten zum Server geschickt
+*/
 async function registrieren(): Promise<void> {
     console.log("Sending form data.");
     let artikelform: HTMLFormElement = <HTMLFormElement> document.getElementById("artikelformular");
     let data: FormData = new FormData(artikelform);
-    
-    //Daten in JSON Objekt schreiben
     if (data.get("name") == "" || data.get("beschreibung") == "" || data.get("bild") == "" || data.get("preis") == "") {
         alert("Ungültige Eingabe");
     }
@@ -34,10 +34,11 @@ async function registrieren(): Promise<void> {
     await doRequest("artikel", "POST", formData);
     console.log("Data sent.");
 }
-//Ausgabe der Datenbank
+//Ausgabe der Datenbank je nach Seiten angepasst
 async function showArtikellist(): Promise<void> {
     if (document.body.id == "Startseite") {
         localStorage.removeItem("id");
+        localStorage.setItem("id", JSON.stringify([]));
     }
     
     let response: Response = await doRequest("Artikel", "GET", "");
@@ -52,7 +53,7 @@ function createTabelle(_artikel: Array<ListenElement>): void {
     let tabelle: HTMLTableElement = <HTMLTableElement> document.getElementById("tabelle");
     let page: string = document.body.id;
     for (let i: number = 0; i < _artikel.length; i++) {
-        
+        if (JSON.parse(localStorage.getItem("id")).includes(_artikel[i]._id) || page !== "reservieren") {
         let zeile: HTMLTableRowElement = document.createElement("tr");
         let zelle: HTMLTableDataCellElement = document.createElement("td");
         zelle.innerHTML = _artikel[i].name;
@@ -124,13 +125,13 @@ function createTabelle(_artikel: Array<ListenElement>): void {
             zeile.appendChild(zelle);
     }
         tabelle.appendChild(zeile);
-    }
+    }}
 }
 //Allgemeine Methode zur Ausführung von Anfragen
 async function doRequest(_pathName: string, _method: string, _body: string): Promise<Response> {
     //Server URLs
-    let serverUrl: string = "https://gisabgabewise2021.herokuapp.com/"; //Remote
-    //let serverUrl: string = "http://localhost:8100/"; //Local
+    //let serverUrl: string = "https://gisabgabewise2021.herokuapp.com/"; //Remote
+    let serverUrl: string = "http://localhost:8100/"; //Local
     
     let response: Promise<Response>;
 
@@ -153,6 +154,7 @@ async function doRequest(_pathName: string, _method: string, _body: string): Pro
     }
     return response;
 }
+//Rechnet Preise der Artikle zum Ausleihen zusammen
 function summe(_artikel: Array<ListenElement>): void {
     let preisSumme: number = 0;
     let ausgewaehlteArtikel: Array<string> = JSON.parse(localStorage.getItem("id"));
@@ -169,7 +171,7 @@ function summe(_artikel: Array<ListenElement>): void {
     summenDiv.textContent = preisSumme + "€";
 
 }
-
+//Status von Mitarbeitern veränderbar
 async function aendern(_artikelId: string, _status: string): Promise<void> {
     console.log("Sending form data."); 
     let formData: string = JSON.stringify(
@@ -182,6 +184,7 @@ async function aendern(_artikelId: string, _status: string): Promise<void> {
     console.log("Data sent.");
     console.log(response);
 }
+//Artikel werden für Reservierung im Local Storage hinterlegt
 async function merken(_artikelId: string, _check: boolean): Promise<void> {
     let ids: Array<string> = JSON.parse(localStorage.getItem("id"));
     if (ids == null) {
@@ -213,8 +216,7 @@ async function merken(_artikelId: string, _check: boolean): Promise<void> {
     }
 
 }
-
-
+//Speichert die Artikel im localStorage ab
 async function reservieren(): Promise<void> {
     let ids: Array<string> = JSON.parse(localStorage.getItem("id"));
     let form: HTMLFormElement = <HTMLFormElement> document.getElementById("name");
